@@ -3,6 +3,8 @@ import {render} from 'react-dom'
 
 import Header from './Header.jsx'
 import Summary from './Summary.jsx'
+import Stats from './Stats.jsx'
+import ObservationList from './ObservationList.jsx'
 import AddButton from './AddButton.jsx'
 
 class App extends Component {
@@ -10,7 +12,10 @@ class App extends Component {
         return (
             <div>
                 <Header />
+                <div style={{height: '8em'}} />
+                <Stats />
                 <Summary />
+                <ObservationList cities={['HKI', 'DUB']} />
                 <AddButton />
             </div>
         )

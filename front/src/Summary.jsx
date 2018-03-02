@@ -38,9 +38,10 @@ class Summary extends Component {
             )
         })
 
+        //<div className={classes.helpText}>Click a city to filter results or to add new observation</div>
+
         return (
             <div>
-                <div className={classes.helpText}>Click a city to filter results or to add new observation</div>
                 <div className={classes.root}>
                     {cities}
                 </div>

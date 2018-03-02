@@ -10,6 +10,15 @@ app.use(
     express.static(path.join(__dirname, '../front/dist'))
 )
 
+app.get('/api/observations', (req, res) => {
+    const cities = (req.query.cities || '').split(',')
+    const page = parseInt(req.query.page || 0)
+
+    Observation.getList(cities, page).then(summary => {
+        res.json(summary)
+    })
+})
+
 app.get('/api/summary', (req, res) => {
     Observation.getSummary().then(summary => {
         res.json(summary)

@@ -1,7 +1,13 @@
 import React, {Component} from 'react'
 import classnames from 'classnames'
+import color from 'color'
 
 import jss from './JSS.jsx'
+
+const brandColor = '#FF5443'
+
+const inactiveBg = '#FFF'
+const activeBg = color(brandColor).mix(color(inactiveBg), 0.85).toString()
 
 const {classes} = jss.createStyleSheet({
     root                : {
@@ -16,7 +22,7 @@ const {classes} = jss.createStyleSheet({
         cursor              : 'pointer',
         display             : 'inline-block',
         flex                : '0 0 15em',
-        background          : '#ff544300',
+        background          : inactiveBg,
         '-webkit-tap-highlight-color': 'transparent',
         '&:hover'           : {
             padding             : 'calc(1em - 1px)',
@@ -26,8 +32,8 @@ const {classes} = jss.createStyleSheet({
             position            : 'absolute',
             content             : '"\u2713"',
             background          : '#FF5443',
-            right               : '-0.75em',
-            top                 : '-0.75em',
+            right               : 'calc(50% - 0.75em)',
+            bottom              : '-0.75em',
             height              : '1.5em',
             width               : '1.5em',
             display             : 'inline-block',
@@ -38,7 +44,7 @@ const {classes} = jss.createStyleSheet({
         },
     },
     selected            : {
-        background          : '#ff54431a',
+        background          : activeBg,
         padding             : 'calc(1em - 1px)',
         border              : '2px solid #FF5443',
         '&:after'           : {
@@ -61,7 +67,7 @@ function CitySelect(props) {
         >
             <div>{name}</div>
             <div className={classes.latest}>{latest ? latest + '\u00B0' : 'Unknown'}</div>
-            <small>{min24 ? `min ${min24} \u2003 max ${max24}` : `No temperature data`}</small>
+            <small>{min24 ? `${min24}\u00B0 min \u2003 max ${max24}\u00B0` : `No temperature data`}</small>
         </div>
     )
 }
