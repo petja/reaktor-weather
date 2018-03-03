@@ -1,12 +1,15 @@
 import React, {Component} from 'react'
 
 import jss from './JSS.jsx'
+import {ReduxStore, ReduxActions} from './Redux.js'
 import CitySelect from './CitySelect.jsx'
 
 const {classes} = jss.createStyleSheet({
     root                : {
         display             : 'flex',
         overflow            : 'auto',
+        maxWidth            : '70em',
+        margin              : '0 auto',
     },
     helpText            : {
         color               : '#FF5443',
@@ -32,7 +35,6 @@ class Summary extends Component {
                     key={cityId}
                     cityId={cityId}
                     selected={isSelected}
-                    onClick={this._toggleCity(cityId)}
                     {...city}
                 />
             )
@@ -51,21 +53,12 @@ class Summary extends Component {
 
     componentDidMount() {
         this._getSummary()
-    }
 
-    _toggleCity = (cityId) => () => {
-        const {selectedCities} = this.state
-
-        const index = selectedCities.indexOf(cityId)
-
-        if (index === -1) {
-            selectedCities.push(cityId)
-        } else {
-            selectedCities.splice(index, 1)
-        }
-
-        this.setState({
-            selectedCities,
+        ReduxStore.subscribe(() => {
+            const {selectedCities} = ReduxStore.getState()
+            this.setState({
+                selectedCities,
+            })
         })
     }
 
@@ -77,6 +70,11 @@ class Summary extends Component {
         }).then(summary => {
             this.setState({
                 summary
+            })
+
+            ReduxStore.dispatch({
+                type                : ReduxActions.SET_CITIES_LIST,
+                cities              : Object.keys(summary),
             })
         })
     }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import {render} from 'react-dom'
+import {render, findDOMNode} from 'react-dom'
 
+import {ReduxStore, ReduxActions} from './Redux.js'
 import Header from './Header.jsx'
 import Summary from './Summary.jsx'
 import Stats from './Stats.jsx'
@@ -12,14 +13,35 @@ class App extends Component {
         return (
             <div>
                 <Header />
-                <div style={{height: '8em'}} />
+                <div style={{height: '5em'}} />
                 <Stats />
                 <Summary />
-                <ObservationList cities={['HKI', 'DUB']} />
+                <ObservationList ref='observations' />
                 <AddButton />
             </div>
         )
     }
+
+    _onScroll() {
+        this.refs.observations.handleScroll(
+            this.refs.scroll.getValues()
+        )
+    }
+}
+
+const _renderThumb = e => {
+    return (
+        <div
+            style={{
+                ...e.style,
+                position        : 'relative',
+                cursor          : 'pointer',
+                borderRadius    : 'inherit',
+                background      : 'rgba(0,0,0,.2)',
+                zIndex          : 3,
+            }}
+        />
+    )
 }
 
 document.addEventListener('DOMContentLoaded', () => {

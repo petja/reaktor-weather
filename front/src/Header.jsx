@@ -7,13 +7,14 @@ import CitySelect from './CitySelect.jsx'
 const {classes} = jss.createStyleSheet({
     root                : {
         background          : '#FF5443',
-        fontSize            : '2em',
+        fontSize            : '1.2em',
         padding             : '1.2em',
         color               : '#FFF',
         width               : '100vw',
         display             : 'inline-block',
         boxSizing           : 'border-box',
         position            : 'fixed',
+        fontWeight          : 'bold',
         zIndex              : 2,
         '& img'             : {
             height              : '1.8em',

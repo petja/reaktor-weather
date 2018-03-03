@@ -9,17 +9,17 @@ Array.prototype.toObj = function(key, fn) {
     }, {})
 }
 
-const ITEMS_PER_PAGE = 10
+const ITEMS_PER_PAGE = 20
 
 function getList(cities, page) {
     return knex.select()
         .from('observations')
         .whereIn('city', cities)
-        .orderBy('timestamp', 'asc')
+        .orderBy('timestamp', 'desc')
         .limit(ITEMS_PER_PAGE)
         .offset(ITEMS_PER_PAGE * page)
         .then(rows => {
-            return rows.toObj('id')
+            return rows
         })
 }
 

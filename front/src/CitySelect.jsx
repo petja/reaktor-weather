@@ -3,11 +3,14 @@ import classnames from 'classnames'
 import color from 'color'
 
 import jss from './JSS.jsx'
+import {ReduxStore, ReduxActions} from './Redux.js'
 
 const brandColor = '#FF5443'
 
 const inactiveBg = '#FFF'
 const activeBg = color(brandColor).mix(color(inactiveBg), 0.85).toString()
+
+const activeHoverBorder = color(brandColor).lighten(0.2).toString()
 
 const {classes} = jss.createStyleSheet({
     root                : {
@@ -47,6 +50,9 @@ const {classes} = jss.createStyleSheet({
         background          : activeBg,
         padding             : 'calc(1em - 1px)',
         border              : '2px solid #FF5443',
+        '&:hover'           : {
+            borderColor         : activeHoverBorder,
+        },
         '&:after'           : {
             transform           : 'scale(1)',
         },
@@ -58,18 +64,29 @@ const {classes} = jss.createStyleSheet({
 }).attach()
 
 function CitySelect(props) {
-    const {name, selected, min24, max24, latest} = props
+    const {name, selected, min24, max24, latest, cityId} = props
+
+    const minMax = min24 ? `${min24}\u00B0 min \u2003 max ${max24}\u00B0` : `No temperature data`
 
     return (
         <div
             className={classnames({[classes.root]: true, [classes.selected]: selected})}
-            onClick={props.onClick}
+            onClick={() => _toggleCity(cityId)}
         >
             <div>{name}</div>
+
             <div className={classes.latest}>{latest ? latest + '\u00B0' : 'Unknown'}</div>
-            <small>{min24 ? `${min24}\u00B0 min \u2003 max ${max24}\u00B0` : `No temperature data`}</small>
+
+            <small>{minMax}</small>
         </div>
     )
+}
+
+const _toggleCity = (cityId) => {
+    ReduxStore.dispatch({
+        type                : ReduxActions.TOGGLE_CITY_FILTER,
+        cityId,
+    })
 }
 
 export default CitySelect
