@@ -81,7 +81,38 @@ function getSummary() {
     })
 }
 
+// Min and max temperatures for each day
+// within previous 14 day
+function getChartData(cities) {
+    const query = knex.select()
+        .from('observations')
+        .column(
+            knex.raw('DATE(timestamp) as date')
+        )
+        .min('temperature as min')
+        .max('temperature as max')
+        .whereIn('city', cities)
+        .whereRaw('DATE(timestamp) >= (CURDATE() - INTERVAL 14 DAY)')
+        .groupBy('date')
+
+    return query.then(resp => {
+        // Format data so it's understandable
+        // by the Recharts library
+        return resp.map(result => {
+            const date = new Date(result.date).toISOString().substr(5,5)
+            return {
+                date,
+                temperature     : [
+                    result.min,
+                    result.max,
+                ],
+            }
+        })
+    })
+}
+
 module.exports = {
+    getChartData,
     getSummary,
     getList,
 }

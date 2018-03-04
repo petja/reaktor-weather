@@ -19,6 +19,14 @@ app.get('/api/observations', (req, res) => {
     })
 })
 
+app.get('/api/chart', (req, res) => {
+    const cities = (req.query.cities || '').split(',')
+
+    Observation.getChartData(cities).then(chartData => {
+        res.json(chartData)
+    })
+})
+
 app.get('/api/summary', (req, res) => {
     Observation.getSummary().then(summary => {
         res.json(summary)

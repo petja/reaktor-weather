@@ -26,6 +26,12 @@ const {classes} = jss.createStyleSheet({
         display             : 'flex',
         maxWidth            : '70em',
     },
+    flexItem            : {
+        flex                : 1,
+    },
+    right               : {
+        textAlign           : 'right',
+    },
 }).attach()
 
 const negativeColor = color('#0000C0')
@@ -61,14 +67,16 @@ function ObservationItem(props) {
         </span>
     )
 
+    const datetime = new Date(timestamp).toLocaleDateString()
+
     return (
         <div
             className={classes.root}
         >
             <div className={classes.container}>
                 {formatted}
-                <div style={{flex: 1}}>{city}</div>
-                <div style={{flex: 1, textAlign: 'right'}}>{timestamp}</div>
+                <div className={classes.flexItem}>{city}</div>
+                <div className={classes.right + ' ' + classes.flexItem}>{datetime}</div>
             </div>
         </div>
     )

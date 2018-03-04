@@ -7,8 +7,8 @@ const halfSize = buttonSize / 2
 
 const {classes} = jss.createStyleSheet({
     root                : {
-        background          : '#FF5443',
-        color               : '#FFF',
+        background          : '#FFC400',
+        color               : '#000',
         position            : 'fixed',
         right               : halfSize + 'em',
         bottom              : halfSize + 'em',
@@ -22,6 +22,7 @@ const {classes} = jss.createStyleSheet({
     icon                : {
         width               : halfSize + 'em',
         height              : halfSize + 'em',
+        opacity             : 1/3*2,
     },
 }).attach()
 

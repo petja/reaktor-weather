@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {render, findDOMNode} from 'react-dom'
+import {render} from 'react-dom'
 
 import {ReduxStore, ReduxActions} from './Redux.js'
 import Header from './Header.jsx'
