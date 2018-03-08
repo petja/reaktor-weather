@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {withRouter} from 'react-router-dom'
 
 import jss from './JSS.jsx'
 
@@ -18,6 +19,11 @@ const {classes} = jss.createStyleSheet({
         alignItems          : 'center',
         justifyContent      : 'center',
         borderRadius        : '50%',
+        transition          : '0.2s',
+        cursor              : 'pointer',
+        '&:hover'           : {
+            transform           : 'scale(1.1)',
+        },
     },
     icon                : {
         width               : halfSize + 'em',
@@ -26,16 +32,12 @@ const {classes} = jss.createStyleSheet({
     },
 }).attach()
 
-class AddButton extends Component {
-    render() {
-        return (
-            <div className={classes.root}>
-                <svg className={classes.icon} viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                </svg>
-            </div>
-        )
-    }
-}
+const AddButton = withRouter(router => (
+    <div className={classes.root} onClick={() => router.history.push('/new-observation')} title='New observation'>
+        <svg className={classes.icon} viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+        </svg>
+    </div>
+))
 
 export default AddButton

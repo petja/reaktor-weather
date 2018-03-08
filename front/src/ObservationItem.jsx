@@ -10,15 +10,14 @@ const inactiveBg = '#FFF'
 const activeBg = color(brandColor).mix(color(inactiveBg), 0.85).toString()
 
 const paperBg = '#F0F0F0'
-const paperHoverBg = color(paperBg).darken(0.05).toString()
 
 const {classes} = jss.createStyleSheet({
     root                : {
-        background          : paperBg,
+        borderBottom        : `1px solid ${paperBg}`,
         padding             : '0.75em',
         boxSizing           : 'border-box',
         '&:hover'           : {
-            background          : paperHoverBg,
+            background          : paperBg,
         },
     },
     container           : {
@@ -67,7 +66,13 @@ function ObservationItem(props) {
         </span>
     )
 
-    const datetime = new Date(timestamp).toLocaleDateString()
+    const datetime = new Date(timestamp).toLocaleDateString('fi', {
+        day         : 'numeric',
+        month       : 'numeric',
+        year        : 'numeric',
+        //hour        : 'numeric',
+        //minute      : 'numeric',
+    })
 
     return (
         <div

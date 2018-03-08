@@ -77,7 +77,12 @@ class ObservationList extends Component {
             }, () => this._getObservations())
         })
 
-        document.addEventListener('scroll', e => this.handleScroll())
+
+        // Attach event listeners for infinite scroll
+        const xxx = ['scroll', 'touchstart', 'touchend', 'touchmove', 'touchcancel']
+        xxx.forEach(eventName => {
+            document.addEventListener(eventName, e => this.handleScroll())
+        })
 
         //this._getObservations()
     }
@@ -88,7 +93,6 @@ class ObservationList extends Component {
             const scrollBottom = details.scrollHeight - details.scrollTop - details.clientHeight
             const threshold = details.clientHeight
 
-            console.log(scrollBottom)
             if (scrollBottom <= threshold && !this.state.loading && !this.state.allLoaded) {
                 this._getObservations()
             }
@@ -126,6 +130,9 @@ class ObservationList extends Component {
             }).catch(err => {
                 // If error occurred on request
                 console.error(err)
+
+                // This is pretty awful but enough
+                alert('Cannot load observations')
 
                 this.setState({
                     loading             : false,

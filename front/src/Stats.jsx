@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
+
 import {ReduxStore, ReduxActions} from './Redux.js'
+import jss from './JSS.jsx'
 
 import {
     Area,
@@ -13,6 +15,13 @@ import {
 
 const brandColor = '#FF5443'
 
+const {classes} = jss.createStyleSheet({
+    root                : {
+        background          : brandColor,
+        paddingTop          : '6em',
+    },
+}).attach()
+
 class Stats extends Component {
     state = {
         data            : [],
@@ -21,7 +30,7 @@ class Stats extends Component {
     render() {
         const {data} = this.state
         return (
-            <div style={{background: brandColor}}>
+            <div className={classes.root}>
                 <ResponsiveContainer height={200}>
                     <AreaChart data={data} margin={{top: 0, right: 0, left: 0, bottom: 0}}>
                         <CartesianAxis />

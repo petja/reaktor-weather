@@ -11,16 +11,29 @@ Array.prototype.toObj = function(key, fn) {
 
 const ITEMS_PER_PAGE = 20
 
+function getCities() {
+    return knex.select()
+        .from('cities')
+        .then(cities => {
+            return cities.toObj('id', city => city.name)
+        })
+}
+
+// Get paginated list of observations
 function getList(cities, page) {
     return knex.select()
         .from('observations')
+        .column([
+            'observations.id',
+            'cities.name as city',
+            'temperature',
+            'timestamp',
+        ])
+        .join('cities', 'cities.id', 'observations.city')
         .whereIn('city', cities)
         .orderBy('timestamp', 'desc')
         .limit(ITEMS_PER_PAGE)
         .offset(ITEMS_PER_PAGE * page)
-        .then(rows => {
-            return rows
-        })
 }
 
 function getSummary() {
@@ -111,8 +124,22 @@ function getChartData(cities) {
     })
 }
 
+function create(details) {
+    return getCities().then(cities => {
+        if(!Object.keys(cities).includes(details.city)) throw new Error(`City doesn't exists`)
+        if(details.temperature < -50 || details.temperature > 50) throw new Error(`Temperature out of range`)
+    }).then(() => {
+        return knex.insert({
+            city            : details.city,
+            temperature     : details.temperature,
+        }).into('observations')
+    })
+}
+
 module.exports = {
+    create,
     getChartData,
     getSummary,
     getList,
+    getCities,
 }
