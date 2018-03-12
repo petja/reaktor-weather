@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 
-import {ReduxStore, ReduxActions} from './Redux.js'
 import jss from './JSS.jsx'
 
 import {
@@ -45,13 +44,16 @@ class Stats extends Component {
     }
 
     componentDidMount() {
-        ReduxStore.subscribe(() => {
-            const {selectedCities} = ReduxStore.getState()
-            this._refreshData(selectedCities)
-        })
+        this._refreshData()
     }
 
-    _refreshData = (cities) => {
+    componentWillReceiveProps() {
+        this._refreshData()
+    }
+
+    _refreshData = () => {
+        const {cities} = this.props
+
         fetch('/api/chart?cities=' + cities.join(','), {
             // Config
         }).then(resp => {

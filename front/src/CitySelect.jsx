@@ -71,11 +71,11 @@ function CitySelect(props) {
     return (
         <div
             className={classnames({[classes.root]: true, [classes.selected]: selected})}
-            onClick={() => _toggleCity(cityId)}
+            onClick={props.onClick}
         >
             <div>{name}</div>
 
-            <div className={classes.latest}>{latest ? latest + '\u00B0' : 'Unknown'}</div>
+            <div className={classes.latest}>{latest != void(0) ? latest + '\u00B0' : 'Unknown'}</div>
 
             <small>{minMax}</small>
         </div>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {withRouter} from 'react-router-dom'
 
 import jss from './JSS.jsx'
 import {ReduxStore, ReduxActions} from './Redux.js'
@@ -24,7 +25,9 @@ class Summary extends Component {
     }
 
     render() {
-        const {summary, selectedCities} = this.state
+        const {summary} = this.state
+        const selectedCities = this.props.cities
+        //const selectedCities = Object.keys(summary) || []
 
         const cities = Object.keys(summary).map(cityId => {
             const city = summary[cityId]
@@ -35,6 +38,7 @@ class Summary extends Component {
                     key={cityId}
                     cityId={cityId}
                     selected={isSelected}
+                    onClick={this._toggleCity(cityId)}
                     {...city}
                 />
             )
@@ -62,6 +66,30 @@ class Summary extends Component {
         })
     }
 
+    _toggleCity = cityId => () => {
+        const selectedCities = this.props.cities
+        const allCities = Object.keys(this.state.summary) || []
+
+        const index = selectedCities.indexOf(cityId)
+
+        if (index === -1) {
+            selectedCities.push(cityId)
+        } else {
+            selectedCities.splice(index, 1)
+
+            console.log({selectedCities, allCities})
+
+            // If all items have been removed
+            if(selectedCities.length < 1) {
+                allCities.forEach(city => {
+                    if(city !== cityId) selectedCities.push(city)
+                })
+            }
+        }
+
+        this.props.history.push('/?cities=' + selectedCities.join(','))
+    }
+
     _getSummary() {
         fetch('/api/summary', {
             // Config
@@ -80,4 +108,4 @@ class Summary extends Component {
     }
 }
 
-export default Summary
+export default withRouter(Summary)

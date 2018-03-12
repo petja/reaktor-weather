@@ -40,7 +40,7 @@ class ObservationEditor extends Component {
         const {cities, city} = this.state
         const temperature = parseInt(this.state.temperature)
 
-        const cityButtons = cities ? Object.keys(cities).sort().map(cityId => {
+        const cityRadios = cities ? Object.keys(cities).sort().map(cityId => {
             return (
                 <Radio
                     name='city'
@@ -51,7 +51,7 @@ class ObservationEditor extends Component {
                     onChange={this.setField('city')}
                 />
             )
-        }) : null
+        }) : '~ Loading cities ~'
 
         const isValid = (
             cities &&
@@ -78,7 +78,7 @@ class ObservationEditor extends Component {
                 </div>
 
                 <div className={classes.section}>
-                    {cityButtons}
+                    {cityRadios}
                 </div>
 
                 <div className={classes.section}>
@@ -87,7 +87,7 @@ class ObservationEditor extends Component {
                         onClick={this._save}
                         disabled={!isValid}
                     >
-                        Save your sighting
+                        Save your observation
                     </Button>
                     <br />
                     <Link to='/'>
@@ -121,7 +121,7 @@ class ObservationEditor extends Component {
             body,
         }).then(resp => {
 
-            this.props.history.push('/')
+            this.props.history.push('/?cities=' + city)
 
         }).catch(err => {
 

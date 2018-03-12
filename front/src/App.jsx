@@ -24,14 +24,19 @@ const NewObservationView = () => (
     <ObservationEditor />
 )
 
-const ListView = () => (
-    <div>
-        <Stats />
-        <Summary />
-        <ObservationList />
-        <AddButton />
-    </div>
-)
+const ListView = (props) => {
+    const citiesParam = new URL(props.location.search, window.location).searchParams.get('cities')
+    const cities = citiesParam ? citiesParam.split(',') : []
+
+    return (
+        <div>
+            <Stats cities={cities} />
+            <Summary cities={cities} />
+            <ObservationList cities={cities} />
+            <AddButton />
+        </div>
+    )
+}
 
 const AppRouter = () => (
     <Router>

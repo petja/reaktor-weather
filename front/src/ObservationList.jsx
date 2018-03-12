@@ -22,7 +22,6 @@ class ObservationList extends Component {
         pagesLoaded         : -1,
         loading             : false,
         allLoaded           : false,
-        selectedCities      : [],
     }
 
     render() {
@@ -64,27 +63,31 @@ class ObservationList extends Component {
         )
     }
 
-    componentDidMount() {
-        ReduxStore.subscribe(() => {
-            const {selectedCities} = ReduxStore.getState()
+    componentWillReceiveProps(nextProps) {
+        const oldCities = (this.props.cities || '').join(',')
+        const newCities = (nextProps.cities || '').join(',')
 
+        console.log('CHANGE', newCities, oldCities)
+
+        //if(newCities !== oldCities) {
             this.setState({
-                selectedCities,
                 observations        : [],
                 pagesLoaded         : -1,
                 loading             : false,
                 allLoaded           : false,
             }, () => this._getObservations())
-        })
+        //}
+    }
 
+    componentDidMount() {
+        // Fetch observations from the server
+        this._getObservations()
 
         // Attach event listeners for infinite scroll
-        const xxx = ['scroll', 'touchstart', 'touchend', 'touchmove', 'touchcancel']
-        xxx.forEach(eventName => {
+        const eventNames = ['scroll', 'touchstart', 'touchend', 'touchmove', 'touchcancel']
+        eventNames.forEach(eventName => {
             document.addEventListener(eventName, e => this.handleScroll())
         })
-
-        //this._getObservations()
     }
 
     handleScroll() {
@@ -103,13 +106,14 @@ class ObservationList extends Component {
         this.setState({
             loading             : true,
         }, () => {
-            const {pagesLoaded, selectedCities} = this.state
+            const {pagesLoaded} = this.state
+            const {cities} = this.props
 
-            if(selectedCities.length < 1) return
+            if(cities.length < 1) return
 
             // Construct API URL
             const url = new URL('/api/observations', location.origin)
-            url.searchParams.set('cities', selectedCities.join(','))
+            url.searchParams.set('cities', cities.join(','))
             url.searchParams.set('page', pagesLoaded + 1)
 
             fetch(url, {
@@ -119,6 +123,8 @@ class ObservationList extends Component {
 
             }).then(observations => {
                 const prevObservations = this.state.observations
+
+                console.log([...prevObservations, ...observations])
 
                 this.setState({
                     allLoaded           : (observations.length === 0),
