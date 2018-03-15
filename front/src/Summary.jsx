@@ -80,11 +80,11 @@ class Summary extends Component {
             console.log({selectedCities, allCities})
 
             // If all items have been removed
-            if(selectedCities.length < 1) {
+            /*if(selectedCities.length < 1) {
                 allCities.forEach(city => {
                     if(city !== cityId) selectedCities.push(city)
                 })
-            }
+            }*/
         }
 
         this.props.history.push('/?cities=' + selectedCities.join(','))

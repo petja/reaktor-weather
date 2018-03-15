@@ -1,0 +1,14 @@
+{
+    "plugins": ["transform-class-properties", "transform-object-rest-spread", "transform-regenerator", "syntax-dynamic-import"],
+    "presets": [
+        [
+            "env",
+            {
+                "targets": {
+                    "node": "current"
+                }
+            }
+        ],
+        "flow"
+    ]
+}

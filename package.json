@@ -12,7 +12,6 @@
     "jss": "^9.8.0",
     "jss-preset-default": "^4.3.0",
     "knex": "^0.14.4",
-    "mysql": "^2.15.0",
     "mysql2": "^1.5.2",
     "particles.js": "^2.0.0",
     "react": "^16.2.0",
@@ -32,12 +31,18 @@
     "babel-plugin-transform-regenerator": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
+    "flow-bin": "^0.67.1",
+    "jest": "^23.0.0-alpha.0",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.10"
   },
   "scripts": {
-    "build": "webpack --watch --colors --progress",
-    "start": "cd back && nodemon back/index.js"
+    "start": "nodemon --watch back/src back/dist/App.js",
+    "build-frontend": "webpack --watch --colors --progress",
+    "build-backend": "babel back/src --out-dir back/dist -w",
+    "build": "npm run build-frontend & npm run build-backend",
+    "test": "jest"
   }
 }

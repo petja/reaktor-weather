@@ -82,11 +82,4 @@ function CitySelect(props) {
     )
 }
 
-const _toggleCity = (cityId) => {
-    ReduxStore.dispatch({
-        type                : ReduxActions.TOGGLE_CITY_FILTER,
-        cityId,
-    })
-}
-
 export default CitySelect
