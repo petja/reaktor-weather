@@ -39,9 +39,9 @@
     "webpack-cli": "^2.0.10"
   },
   "scripts": {
-    "start": "nodemon --watch back/src back/dist/App.js",
+    "start": "nodemon --watch back/dist back/dist/App.js",
     "build-frontend": "webpack --watch --colors --progress",
-    "build-backend": "babel back/src --out-dir back/dist -w",
+    "build-backend": "cd back && babel src --out-dir dist -w",
     "build": "npm run build-frontend & npm run build-backend",
     "test": "jest"
   }

@@ -1,7 +1,7 @@
 # Reaktor Weather
 [![Build Status](https://travis-ci.org/petja/reaktor-weather.svg?branch=master)](https://travis-ci.org/petja/reaktor-weather)
 
-[ Insert screenshot here ]
+![Screenshot](screenshot.png)
 
 **Reaktor Weather** is demonstration for Reaktor, company I'm seeking to work at on the summer 2018.
 

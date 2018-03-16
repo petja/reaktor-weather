@@ -20,7 +20,7 @@ function getCities() {
 }
 
 // Get paginated list of observations
-function getList(cities: string[], page: number) {
+function getList(cities: string[], page: number): object[] {
     return knex.select()
         .from('observations')
         .column([
