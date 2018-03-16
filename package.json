@@ -34,7 +34,7 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
     "flow-bin": "^0.67.1",
-    "jest": "^23.0.0-alpha.0",
+    "jest": "^22.4.2",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.10"
   },
