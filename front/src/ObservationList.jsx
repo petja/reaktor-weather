@@ -116,14 +116,14 @@ class ObservationList extends Component {
             url.searchParams.set('cities', cities.join(','))
             url.searchParams.set('page', pagesLoaded + 1)
 
-            fetch(url, {
-                // Config
-            }).then(resp => {
+            fetch(url).then(resp => {
+
                 return resp.json()
 
             }).then(observations => {
                 const prevObservations = this.state.observations
 
+                // Merge previous and current batch
                 console.log([...prevObservations, ...observations])
 
                 this.setState({

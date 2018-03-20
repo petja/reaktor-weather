@@ -139,6 +139,12 @@ class ObservationEditor extends Component {
             this.setState({
                 cities,
             })
+        }).catch(err => {
+
+            // Ugly but at least it works
+            console.error(err)
+            alert('Cannot fetch list of cities')
+
         })
     }
 }

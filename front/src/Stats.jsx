@@ -73,14 +73,22 @@ class Stats extends Component<Props> {
     _refreshData = () => {
         const {cities} = this.props
 
-        fetch('/api/chart?cities=' + cities.join(','), {
-            // Config
-        }).then(resp => {
+        fetch('/api/chart?cities=' + cities.join(',')).then(resp => {
+
             return resp.json()
+
         }).then(data => {
+
             this.setState({
                 data
             })
+
+        }).catch(err => {
+
+            // Ugly but at least it works
+            console.error(err)
+            alert('Cannot fetch data for chart')
+
         })
     }
 }

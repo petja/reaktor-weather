@@ -91,19 +91,22 @@ class Summary extends Component {
     }
 
     _getSummary() {
-        fetch('/api/summary', {
-            // Config
-        }).then(resp => {
+        fetch('/api/summary').then(resp => {
+
             return resp.json()
+
         }).then(summary => {
+
             this.setState({
                 summary
             })
 
-            ReduxStore.dispatch({
-                type                : ReduxActions.SET_CITIES_LIST,
-                cities              : Object.keys(summary),
-            })
+        }).catch(err => {
+
+            // Ugly but at least it works
+            console.error(err)
+            alert('Cannot add new observation')
+
         })
     }
 }
