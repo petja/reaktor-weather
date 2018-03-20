@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import classnames from 'classnames'
 import color from 'color'
 
+import moment from 'moment'
+
 import jss from './JSS.jsx'
 
 const brandColor = '#FF5443'
@@ -37,6 +39,8 @@ const negativeColor = color('#0000C0')
 const neutralColor  = color('#000000')
 const positiveColor = color('#C00000')
 
+// If temperature is below average, it will turn blue
+// If temperature is above average, it will turn red
 function _calculateTextColor(value, range, avg) {
     const {min, max} = range
     const deltaMax = (value - avg) / (max - avg)
@@ -54,7 +58,10 @@ function _calculateTextColor(value, range, avg) {
 function ObservationItem(props) {
     const {temperature, city, timestamp, range, avg} = props
 
-    const formatted = (
+    // Format relative date
+    const datetime = moment(timestamp).fromNow()
+
+    const temperatureColumn = (
         <span
             style={{
                 color: _calculateTextColor(temperature, range, avg),
@@ -66,20 +73,12 @@ function ObservationItem(props) {
         </span>
     )
 
-    const datetime = new Date(timestamp).toLocaleDateString('fi', {
-        day         : 'numeric',
-        month       : 'numeric',
-        year        : 'numeric',
-        //hour        : 'numeric',
-        //minute      : 'numeric',
-    })
-
     return (
         <div
             className={classes.root}
         >
             <div className={classes.container}>
-                {formatted}
+                {temperatureColumn}
                 <div className={classes.flexItem}>{city}</div>
                 <div className={classes.right + ' ' + classes.flexItem}>{datetime}</div>
             </div>

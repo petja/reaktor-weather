@@ -12,6 +12,7 @@
     "jss": "^9.8.0",
     "jss-preset-default": "^4.3.0",
     "knex": "^0.14.4",
+    "moment": "^2.21.0",
     "mysql2": "^1.5.2",
     "particles.js": "^2.0.0",
     "react": "^16.2.0",
